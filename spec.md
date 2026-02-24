@@ -71,7 +71,7 @@
 
 ### 10.2 ゲートウェイ側 (コンテナ)
 - リバースプロキシ: `nginx` もしくは同等のコンテナ。
-- RDP over HTTPS ゲートウェイ: 選定後に確定 (例: FreeRDP `rdpgw` など)。
+- RDP over HTTPS ゲートウェイ: 選定後に確定 (例: FreeRDP `freerdp-proxy` (rdpgw 相当) など)。
 - ACME クライアント: `certbot` + `certbot-dns-cloudflare` (Cloudflare DNS-01 対応)。
 
 ### 10.3 RD 対象 Ubuntu 側
