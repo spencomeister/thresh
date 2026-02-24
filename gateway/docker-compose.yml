@@ -1,0 +1,50 @@
+services:
+  nginx:
+    image: nginx:1.26-alpine
+    restart: unless-stopped
+    ports:
+      - "443:443"
+    volumes:
+      - ./nginx/conf.d:/etc/nginx/conf.d:ro
+      - ./letsencrypt:/etc/letsencrypt:ro
+      - ./logs/nginx:/var/log/nginx
+    depends_on:
+      - rdpgw
+    networks:
+      - rdgw
+
+  rdpgw:
+    image: ${RDPGW_IMAGE}
+    restart: unless-stopped
+    environment:
+      - TZ=UTC
+    volumes:
+      - ./rdpgw:/etc/rdpgw
+      - ./logs/rdpgw:/var/log/rdpgw
+    networks:
+      - rdgw
+
+  certbot:
+    image: certbot/dns-cloudflare:latest
+    volumes:
+      - ./letsencrypt:/etc/letsencrypt
+      - ./certbot/cloudflare.ini:/cloudflare.ini:ro
+
+  tailscale:
+    image: tailscale/tailscale:stable
+    profiles:
+      - tailscale
+    network_mode: host
+    cap_add:
+      - NET_ADMIN
+      - SYS_MODULE
+    environment:
+      - TS_AUTHKEY=${TS_AUTHKEY}
+      - TS_STATE_DIR=/var/lib/tailscale
+    volumes:
+      - ./tailscale:/var/lib/tailscale
+    restart: unless-stopped
+
+networks:
+  rdgw:
+    driver: bridge
