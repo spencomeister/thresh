@@ -39,6 +39,7 @@ RUN git clone --depth 1 https://github.com/FreeRDP/FreeRDP.git \
       -DWITH_FFMPEG=OFF \
       -DWITH_CUPS=OFF \
       -DWITH_FUSE=OFF \
+      -DWITH_URBDRC=OFF \
      -DWITH_MANPAGES=OFF \
   && cmake --build FreeRDP/build -j"$(nproc)" \
   && cmake --install FreeRDP/build \
