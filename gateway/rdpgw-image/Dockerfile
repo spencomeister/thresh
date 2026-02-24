@@ -9,6 +9,10 @@ RUN apt-get update \
      cmake \
      git \
      pkg-config \
+    libavcodec-dev \
+    libavformat-dev \
+    libavutil-dev \
+    libswscale-dev \
      libssl-dev \
      libkrb5-dev \
      libpam0g-dev \
