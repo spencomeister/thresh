@@ -1,10 +1,16 @@
 #!/usr/bin/env sh
 set -eu
 
-RDPGW_BIN="/usr/local/sbin/rdpgw"
+RDPGW_BIN=""
 
-if [ ! -x "$RDPGW_BIN" ]; then
-  echo "rdpgw binary not found at $RDPGW_BIN" >&2
+if command -v rdpgw >/dev/null 2>&1; then
+  RDPGW_BIN="$(command -v rdpgw)"
+else
+  RDPGW_BIN="$(find /usr/local -type f -name rdpgw 2>/dev/null | head -n 1 || true)"
+fi
+
+if [ -z "$RDPGW_BIN" ] || [ ! -x "$RDPGW_BIN" ]; then
+  echo "rdpgw binary not found in PATH or /usr/local" >&2
   exit 1
 fi
 
