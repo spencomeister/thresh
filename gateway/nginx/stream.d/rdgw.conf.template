@@ -1,13 +1,11 @@
 resolver 127.0.0.11 valid=30s;
 resolver_timeout 5s;
 
-upstream rdpgw_upstream {
-  server __RDPGW_UPSTREAM__ resolve;
-}
-
 server {
   listen 443;
-  proxy_pass rdpgw_upstream;
+  # Use a variable to avoid resolving at config load time.
+  set $rdp_upstream "__RDPGW_UPSTREAM__";
+  proxy_pass $rdp_upstream;
   proxy_connect_timeout 30s;
   proxy_timeout 1h;
 }
