@@ -14,13 +14,18 @@ services:
       - rdgw
 
   rdpgw:
-    image: ${RDPGW_IMAGE}
+    image: ${RDPGW_IMAGE:-rdpgw-local}
+    build:
+      context: ./rdpgw-image
     restart: unless-stopped
     environment:
       - TZ=UTC
+      - RDPGW_ARGS=${RDPGW_ARGS:-}
     volumes:
       - ./rdpgw:/etc/rdpgw
       - ./logs/rdpgw:/var/log/rdpgw
+    expose:
+      - "3391"
     networks:
       - rdgw
 

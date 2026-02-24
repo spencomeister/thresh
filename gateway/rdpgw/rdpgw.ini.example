@@ -1,0 +1,5 @@
+# Example config placeholder for rdpgw.
+# Copy to rdpgw.ini and adjust for your deployment if needed.
+
+# [core]
+# listen=0.0.0.0:3391
