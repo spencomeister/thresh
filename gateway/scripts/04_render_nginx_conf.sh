@@ -13,6 +13,9 @@ fi
 : "${DOMAIN:?DOMAIN is required}"
 : "${RDPGW_UPSTREAM:?RDPGW_UPSTREAM is required}"
 
+# Nginx stream proxy_pass does not support the "resolve" parameter.
+RDPGW_UPSTREAM=$(printf '%s' "$RDPGW_UPSTREAM" | sed -E 's/[[:space:]]*resolve[[:space:]]*$//')
+
 TEMPLATE="$ROOT_DIR/nginx/stream.d/rdgw.conf.template"
 OUTPUT="$ROOT_DIR/nginx/stream.d/rdgw.conf"
 LEGACY_HTTP_CONF="$ROOT_DIR/nginx/conf.d/rdgw.conf"
