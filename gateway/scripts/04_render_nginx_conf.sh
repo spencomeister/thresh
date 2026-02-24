@@ -15,9 +15,15 @@ fi
 
 TEMPLATE="$ROOT_DIR/nginx/stream.d/rdgw.conf.template"
 OUTPUT="$ROOT_DIR/nginx/stream.d/rdgw.conf"
+LEGACY_HTTP_CONF="$ROOT_DIR/nginx/conf.d/rdgw.conf"
 
 sed \
   -e "s/__DOMAIN__/${DOMAIN}/g" \
   -e "s/__RDPGW_UPSTREAM__/${RDPGW_UPSTREAM}/g" \
   "$TEMPLATE" > "$OUTPUT"
+
+# Remove legacy http conf if it exists to avoid stream directive errors.
+if [ -f "$LEGACY_HTTP_CONF" ]; then
+  rm -f "$LEGACY_HTTP_CONF"
+fi
 
