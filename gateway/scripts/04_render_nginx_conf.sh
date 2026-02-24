@@ -13,8 +13,8 @@ fi
 : "${DOMAIN:?DOMAIN is required}"
 : "${RDPGW_UPSTREAM:?RDPGW_UPSTREAM is required}"
 
-TEMPLATE="$ROOT_DIR/nginx/conf.d/rdgw.conf.template"
-OUTPUT="$ROOT_DIR/nginx/conf.d/rdgw.conf"
+TEMPLATE="$ROOT_DIR/nginx/stream.d/rdgw.conf.template"
+OUTPUT="$ROOT_DIR/nginx/stream.d/rdgw.conf"
 
 sed \
   -e "s/__DOMAIN__/${DOMAIN}/g" \
